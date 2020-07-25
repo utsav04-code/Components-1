@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "conFusion2"
+    }
+  },
+  "defaultProject": "conFusion2",
+  "cli": {
+    "analytics": "14000583-d737-4482-9175-0ea0b6fd1f0f"
+  }
 }
