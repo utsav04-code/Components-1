@@ -34,23 +34,57 @@
 
   <div fxFlex="50" *ngIf="dish">
     
-    <h2 md-line>Comments<br><br></h2>    
-    <md-list>
-        <md-list-item *ngFor="let comm of dish.comments">
+    <h2 md-line>Comments<br></h2>    
+    <mat-list>
+        <mat-list-item *ngFor="let comm of dish.comments">
 
             <p md-line> 
                 <span><b> {{comm.comment}} </b><br></span>
             
                 <span><b>{{comm.rating}} Stars</b><br> </span>
              
-                <span> --{{comm.author}}  {{comm.date | date}} </span>
-             </p>
+                <span> --{{comm.author}} {{comm.date | date}} </span>
+                </p>
+        </mat-list-item> 
+
+        <mat-list-item>
+        
+          <p md-line >
+              <span *ngIf= "!formErrors.comment"><b> {{commentForm.value.comment}} </b><br></span>
+          
+              <span><b>{{commentForm.value.rating}} Stars</b><br> </span>
+           
+              <span *ngIf= "!formErrors.author"> --{{commentForm.value.author}}</span>
+              </p>
             
-        </md-list-item>
-    </md-list>
+      </mat-list-item> 
+    </mat-list>
+
+    <form novalidate [formGroup]= "commentForm" #fform= "ngForm" (ngSubmit)= "onSubmit()" >
+        <p>
+          <mat-form-field class= "full-width">
+            <input matInput formControlName= "author" placeholder= "Name" type= "text" required >
+            <mat-error *ngIf= "formErrors.author">
+                {{formErrors.author}} 
+              </mat-error>
+          </mat-form-field>
+          <mat-slider formControlName= "rating" min="1" max="5" step="1" value="0" thumbLabel tickInterval="1"></mat-slider>
+          <mat-form-field class= "full-width">
+            <textarea matInput formControlName= "comment" placeholder= "Your comment" rows=12 required>    
+            </textarea>
+            <mat-error *ngIf= "formErrors.comment">
+                {{formErrors.comment}}
+              </mat-error>
+          </mat-form-field>
+           
+
+          <button type= "submit" mat-button class= "background-primary text-floral-white"
+      [disabled]= "commentForm.invalid">Submit</button>
+    </p>
+    </form>
+
   </div>
   <div fxFlex [hidden]= "dish">
     <mat-spinner></mat-spinner> <h4>Loading . . . Please wait !</h4>
 </div>
-
 </div>
