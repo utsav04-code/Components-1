@@ -13,7 +13,7 @@
               <h1>{{dish.name | uppercase}}</h1>
           </mat-card-title>
       </mat-card-header>
-      <img mat-card-image src={{dish.image}} height="300px" alt={{dish.name}}>
+      <img mat-card-image src="{{BaseURL + dish.image}}" height="300px" alt={{dish.name}}>
       <mat-card-content>
           <p>{{dish.description}}</p>
       </mat-card-content>
@@ -47,17 +47,20 @@
                 </p>
         </mat-list-item> 
 
-        <mat-list-item>
         
-          <p md-line >
-              <span *ngIf= "!formErrors.comment"><b> {{commentForm.value.comment}} </b><br></span>
+    </mat-list>
+    <mat-list *ngIf= "commentForm.valid">
+      <mat-list-item>
+        
+        <p md-line >
+            <span><b> {{commentForm.get('comment').value}} </b><br></span>
+        
+            <span><b>{{commentForm.get('rating').value}} Stars</b><br> </span>
+         
+            <span> --{{commentForm.get('author').value}}</span>
+            </p>
           
-              <span><b>{{commentForm.value.rating}} Stars</b><br> </span>
-           
-              <span *ngIf= "!formErrors.author"> --{{commentForm.value.author}}</span>
-              </p>
-            
-      </mat-list-item> 
+    </mat-list-item> 
     </mat-list>
 
     <form novalidate [formGroup]= "commentForm" #fform= "ngForm" (ngSubmit)= "onSubmit()" >
